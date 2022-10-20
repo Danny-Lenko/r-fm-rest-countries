@@ -9,8 +9,8 @@ import Tooltip from '@mui/material/Tooltip';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '@mui/material';
 import { ColorModeContext } from '../../../utilities/ToggleColorMode';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 
 const ResponsiveAppBar = () => {
    const theme = useTheme();
@@ -21,21 +21,25 @@ const ResponsiveAppBar = () => {
    return (
       <AppBar 
          position='static'
-         color='default' 
+         color='default'
+         elevation={25} // (this is a customized value pushed in my theme in App.tsx)
       >
          <Container maxWidth='xl'>
             <Toolbar disableGutters>
-               <Typography fontWeight='bold' sx={{ mr: 2, display: 'flex' }} >
+               <Typography color='unset' fontWeight='bold' sx={{ mr: 2, display: 'flex' }} >
                   Where in the world?
                </Typography>
 
-               <Box sx={{ flexGrow: 1, display: 'flex' }}>
-
-               </Box>
-
-               <Box sx={{ flexGrow: 0 }}>
-                  <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleClrMode} color="inherit">
-                     {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+               <Box sx={{ flexGrow: 0, ml: 'auto' }}>
+                  <IconButton sx={{ ml: 1, fontSize: 11 }} onClick={colorMode.toggleClrMode} color="inherit">
+                     {
+                        theme.palette.mode === 'dark' 
+                           ? <LightModeIcon fontSize='small' /> 
+                           : <DarkModeIcon fontSize='small' /> 
+                     }
+                     <Typography fontSize={13} sx={{ml:1}}>
+                        {theme.palette.mode === 'light' ? 'Dark Mode': 'Light Mode'}
+                     </Typography>
                   </IconButton>
                </Box>
             </Toolbar>
