@@ -1,7 +1,9 @@
 import { Routes, Route } from 'react-router-dom'
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 import { ColorModeContext, ToggleColorMode } from './library/utilities/ToggleColorMode'
 import AppBar from './library/common/components/AppBar/AppBar';
+import AllCountries from './modules/AllCountries/AllCountries';
+import NotFount from './modules/NotFound/NotFound';
 
 function App() {
   const myColorMode = ToggleColorMode()
@@ -16,7 +18,8 @@ function App() {
       </ColorModeContext.Provider>
 
       <Routes>
-        {/* <Route path='/' element={<PostsList />} /> */}
+        <Route path='/' element={<AllCountries />} />
+        <Route path='*' element={<NotFount />} />
       </Routes>
 
     </ThemeProvider >

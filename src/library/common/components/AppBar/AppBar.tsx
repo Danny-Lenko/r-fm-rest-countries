@@ -21,8 +21,9 @@ const ResponsiveAppBar = () => {
    return (
       <AppBar 
          position='static'
-         color='default'
-         elevation={25} // (this is a customized value pushed in my theme in App.tsx)
+         color='inherit'
+         elevation={25} // (a customized value pushed to the Theme in App.tsx)
+         sx={{backgroundImage: 'none'}}
       >
          <Container maxWidth='xl'>
             <Toolbar disableGutters>
