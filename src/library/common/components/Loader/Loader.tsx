@@ -9,7 +9,7 @@ export default function Loader() {
          justifyContent: 'center',
          alignItems: 'center',
          minWidth: '100%',
-         minHeight: '80vh'
+         height: {xs: '30vh', md: '50vh'}
       }}>
          <CircularProgress />
       </Box>

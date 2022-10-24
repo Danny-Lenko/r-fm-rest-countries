@@ -1,7 +1,7 @@
 import { AppDispatch } from '../../main/store/store';
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { fetchCountries } from './allCountriesSlice';
+import { fetchCountries, filterByRegion } from './allCountriesSlice';
 import Box from '@mui/material/Box'
 import SearchIcon from '@mui/icons-material/Search';
 import MenuItem from '@mui/material/MenuItem';
@@ -14,15 +14,17 @@ const FormFilters = () => {
    const [name, setName] = useState('')
    const [region, setRegion] = useState('')
 
+   let keyupTimer:any
+
    const handleSelectChange = (event: SelectChangeEvent) => {
       setRegion(event.target.value)
    }
 
    useEffect(() => {
-      dispatch(fetchCountries(name))
-   }, [dispatch, name])
+      dispatch(fetchCountries(''))
+   }, [dispatch])
 
-   return (  
+   return (
       <Box sx={{ mx: '10%', display: 'flex', flexDirection: { xs: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: 'center' }}>
          <Search>
             <SearchIconWrapper>
@@ -32,14 +34,21 @@ const FormFilters = () => {
                placeholder="Search for a country…"
                inputProps={{ 'aria-label': 'search' }}
                value={name}
-               onChange={(e)=>setName(e.target.value)}
+               onChange={(e) => {
+                  clearInterval(keyupTimer)
+                  setName(e.target.value)
+                  keyupTimer = setTimeout(() => {dispatch(fetchCountries(e.target.value))}, 1000)
+               }}
             />
          </Search>
 
          <FormControl sx={selectStyles}>
             <Select
                value={region}
-               onChange={handleSelectChange}
+               onChange={(e) => {
+                  handleSelectChange(e)
+                  dispatch(filterByRegion(e.target.value))
+               }}
                displayEmpty
                inputProps={{ 'aria-label': 'Without label' }}
             >
@@ -47,7 +56,7 @@ const FormFilters = () => {
                   <em>Filter by Region</em>
                </MenuItem>
                <MenuItem value={'Africa'}>Africa</MenuItem>
-               <MenuItem value={'America'}>America</MenuItem>
+               <MenuItem value={'Americas'}>Americas</MenuItem>
                <MenuItem value={'Asia'}>Asia</MenuItem>
                <MenuItem value={'Europe'}>Europe</MenuItem>
                <MenuItem value={'Oceania'}>Oceania</MenuItem>

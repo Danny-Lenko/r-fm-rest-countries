@@ -12,8 +12,8 @@ const AllCountries = () => {
    const countries = useSelector((state: IGlobalState) => state.countries.countries)
    const countriesStatus = useSelector((state: IGlobalState) => state.countries.status)
    const error = useSelector((state: IGlobalState) => state.countries.error)
-
-   console.log(countries)
+   const region = useSelector((state:IGlobalState) => state.countries.region)
+   const countriesRendered = region ? countries.filter(country => country.region === region) : countries
 
    return (
       <Container maxWidth='xl'>
@@ -27,9 +27,11 @@ const AllCountries = () => {
 
                   <Grid container spacing={0} gap={5} sx={{ justifyContent: { xs: 'space-evenly', xl: 'space-between' } }}>
                      {
-                        countries.map(country => <Grid key={country.name.common}>
+                        countriesRendered[0] ? countriesRendered.map(country => <Grid key={country.name.common}>
                            <CountryCard {...country} />
                         </Grid>)
+
+                        : <h3>No Matching Results</h3>
                      }
                   </Grid>
                </Box>

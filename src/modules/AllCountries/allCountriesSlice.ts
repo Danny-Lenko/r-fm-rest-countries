@@ -4,27 +4,23 @@ import { IAllCountries } from '../../library/interfaces/interfaces'
 const initialState: IAllCountries = {
   countries: [],
   status: 'idle',
-  error: null
+  error: null,
+  region: null
 }
 
 export const fetchCountries = createAsyncThunk('countries/fetchCountries', async (name:string) => {
    const endPoint = name ? `name/${name}` : 'all'
-   const res = await fetch(`https://restcountries.com/v3.1/${endPoint}`)
-   const data = await res.json()
-   return data
+   return fetch(`https://restcountries.com/v3.1/${endPoint}`).then(res => res.json())   
 })
 
-// export const fetchCountries = createAsyncThunk('countries/fetchCountries', async () => {
-//    const res = await fetch(`https://restcountries.com/v3.1/all`)
-//    const data = await res.json()
-//    return data
-// })
 
 const allCountriesSlice = createSlice({
    name: 'countries',
    initialState,
    reducers: {
-      // omit existing reducers here
+      filterByRegion: (state, action) => {
+         state.region = action.payload
+      }
    },
    extraReducers(builder) {
       builder
@@ -32,8 +28,9 @@ const allCountriesSlice = createSlice({
             state.status = 'loading'
          })
          .addCase(fetchCountries.fulfilled, (state, action) => {
-            state.status = 'succeeded'
+            console.log(action.payload)
             state.countries = action.payload
+            state.status = 'succeeded'
          })
          .addCase(fetchCountries.rejected, (state, action) => {
             state.status = 'failed'
@@ -42,6 +39,6 @@ const allCountriesSlice = createSlice({
    }
 })
 
-// export const { } = allCountriesSlice.actions
+export const { filterByRegion } = allCountriesSlice.actions
 
 export default allCountriesSlice.reducer

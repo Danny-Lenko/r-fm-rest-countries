@@ -6,6 +6,7 @@ export interface IAllCountries {
    countries: ICountry[]
    status: 'idle' | 'loading' | 'succeeded' | 'failed'
    error: null | string | undefined
+   region: null | string
 }
 
 export interface ICountry {
