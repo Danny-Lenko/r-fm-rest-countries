@@ -1,4 +1,4 @@
-import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { IAllCountries } from '../../library/interfaces/interfaces'
 
 const initialState: IAllCountries = {
@@ -7,11 +7,18 @@ const initialState: IAllCountries = {
   error: null
 }
 
-export const fetchCountries = createAsyncThunk('countries/fetchCountries', async () => {
-   const res = await fetch('https://restcountries.com/v3.1/all')
+export const fetchCountries = createAsyncThunk('countries/fetchCountries', async (name:string) => {
+   const endPoint = name ? `name/${name}` : 'all'
+   const res = await fetch(`https://restcountries.com/v3.1/${endPoint}`)
    const data = await res.json()
    return data
 })
+
+// export const fetchCountries = createAsyncThunk('countries/fetchCountries', async () => {
+//    const res = await fetch(`https://restcountries.com/v3.1/all`)
+//    const data = await res.json()
+//    return data
+// })
 
 const allCountriesSlice = createSlice({
    name: 'countries',
