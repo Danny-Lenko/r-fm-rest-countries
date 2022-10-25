@@ -5,7 +5,8 @@ const initialState: IAllCountries = {
   countries: [],
   status: 'idle',
   error: null,
-  region: null
+  region: null,
+  searchQuery: null
 }
 
 export const fetchCountries = createAsyncThunk('countries/fetchCountries', async (name:string) => {
@@ -20,6 +21,9 @@ const allCountriesSlice = createSlice({
    reducers: {
       filterByRegion: (state, action) => {
          state.region = action.payload
+      },
+      assignSearchQuery: (state, action) => {
+         state.searchQuery = action.payload
       }
    },
    extraReducers(builder) {
@@ -39,6 +43,6 @@ const allCountriesSlice = createSlice({
    }
 })
 
-export const { filterByRegion } = allCountriesSlice.actions
+export const { filterByRegion, assignSearchQuery } = allCountriesSlice.actions
 
 export default allCountriesSlice.reducer

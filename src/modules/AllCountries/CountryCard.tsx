@@ -7,6 +7,7 @@ import { ICountry } from '../../library/interfaces/interfaces';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import { useNavigate } from 'react-router-dom';
 
 export default function CountryCard({ 
    name, 
@@ -40,9 +41,13 @@ export default function CountryCard({
       },
    }
 
+   const navigate = useNavigate()
+
    return (
       <Card elevation={25} sx={countryCardStyles}>
-         <CardActionArea>
+         <CardActionArea
+            onClick={() => navigate(`/${name.common}`)}
+         >
             <CardMedia
                component="img"
                height="140"
@@ -64,10 +69,6 @@ export default function CountryCard({
                      <ListItemText primary="Capital:" secondary={capital}/>
                   </ListItem>
                </List>
-               {/* <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography> */}
             </CardContent>
          </CardActionArea>
       </Card>

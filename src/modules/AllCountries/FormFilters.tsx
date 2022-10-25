@@ -1,18 +1,21 @@
 import { AppDispatch } from '../../main/store/store';
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { fetchCountries, filterByRegion } from './allCountriesSlice';
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCountries, filterByRegion, assignSearchQuery } from './allCountriesSlice';
 import Box from '@mui/material/Box'
 import SearchIcon from '@mui/icons-material/Search';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Search, SearchIconWrapper, StyledInputBase, selectStyles } from './FormFilterStyling';
+import { IGlobalState } from '../../library/interfaces/interfaces';
 
 const FormFilters = () => {
+   const stateRegion = useSelector((state:IGlobalState) => state.countries.region)
+   const stateSearchQuery = useSelector((state:IGlobalState) => state.countries.searchQuery)
    const dispatch = useDispatch<AppDispatch>()
-   const [name, setName] = useState('')
-   const [region, setRegion] = useState('')
+   const [name, setName] = useState(stateSearchQuery ? stateSearchQuery : '')
+   const [region, setRegion] = useState(stateRegion ? stateRegion : '')
 
    let keyupTimer:any
 
@@ -21,7 +24,12 @@ const FormFilters = () => {
    }
 
    useEffect(() => {
-      dispatch(fetchCountries(''))
+      if (name) {
+         dispatch(fetchCountries(name))
+      }
+      else {
+         dispatch(fetchCountries(''))
+      }
    }, [dispatch])
 
    return (
@@ -37,6 +45,7 @@ const FormFilters = () => {
                onChange={(e) => {
                   clearInterval(keyupTimer)
                   setName(e.target.value)
+                  dispatch(assignSearchQuery(e.target.value)) 
                   keyupTimer = setTimeout(() => {dispatch(fetchCountries(e.target.value))}, 1000)
                }}
             />

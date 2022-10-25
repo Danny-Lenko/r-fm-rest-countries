@@ -4,6 +4,7 @@ import { ColorModeContext, ToggleColorMode } from './library/utilities/ToggleCol
 import AppBar from './library/common/components/AppBar/AppBar';
 import AllCountries from './modules/AllCountries/AllCountries';
 import NotFount from './modules/NotFound/NotFound';
+import Country from './modules/Country/Country';
 
 function App() {
   const myColorMode = ToggleColorMode()
@@ -19,6 +20,7 @@ function App() {
 
       <Routes>
         <Route path='/' element={<AllCountries />} />
+        <Route path=':name' element={<Country />} />
         <Route path='*' element={<NotFount />} />
       </Routes>
 
