@@ -10,9 +10,8 @@ import { AppDispatch } from "../../main/store/store";
 import Loader from "../../library/common/components/Loader/Loader";
 import Error from "../../library/common/components/Error/Error";
 import Typography from "@mui/material/Typography";
-import styled from "@mui/material/styles/styled";
-import Button from "@mui/material/Button";
 import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
+import { BorderButton, mainBoxStyles, contentBoxStyles, PropertyBox, ValueBox } from "./CoutryStyles";
 
 const Country = () => {
    const { name } = useParams()
@@ -34,43 +33,6 @@ const Country = () => {
    const countryBorders = borders ? borders.map(acronym => {
       return countries.find(country => country.cca3 === acronym)?.name.common
    }) : null
-
-   console.log(country)
-
-   const PropertyBox = styled(Typography)(({theme}) => ({
-      fontSize: 'small',
-      fontWeight: theme.typography.fontWeightBold,
-      marginBottom: theme.spacing(1)
-   }))
-
-   const ValueBox = styled('span')(({theme}) => ({
-      fontWeight: theme.typography.fontWeightRegular,
-      color: theme.palette.mode === 'light' ? theme.palette.grey[700] : theme.palette.grey[300],
-   }))
-
-   const BorderButton = styled(Button)(({theme}) => ({
-      boxShadow: "0px 3px 1px -2px rgba(0,0,0,0.01),0px 2px 2px 0px rgba(0,0,0,0.014),0px 1px 5px 0px rgba(0,0,0,0.12)",
-      textTransform: 'capitalize',
-      fontWeight: theme.typography.fontWeightRegular,
-      color: theme.palette.mode === 'light' ? theme.palette.grey[700] : theme.palette.grey[300],
-      marginRight: theme.spacing(1),
-      backgroundColor: theme.palette.background.paper,
-      padding: '3px 15px'
-   }))
-
-   const mainBoxStyles = {
-      display: 'flex',
-      flexDirection: {xs: 'column', md: 'row'},
-      justifyContent: 'space-between',
-      alignItems: {xs: 'center', md: 'unset'}
-   }
-
-   const contentBoxStyles = {
-       width: {xs: '100%', sm: '70%', md: '40%', lg: '50%'},
-       display: 'flex',
-       flexWrap: 'wrap',
-       justifyContent: 'space-between'
-   }
 
    return (
       <Container maxWidth="xl">
@@ -130,11 +92,12 @@ const Country = () => {
                         </PropertyBox>
                      </Box>
                      {/* border countryies */}
-                     <PropertyBox sx={{width: '100%', mt: 5, mb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1}}>
+                     <Box sx={{width: '100%', mt: 5, mb: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1}}>
                         <Typography fontSize='small' fontWeight={800} sx={{mb: 1}}>Border Countries:</Typography> 
                         <Box>{
                            countryBorders 
                               ? countryBorders.map(country => <BorderButton
+                                 key={country}
                                  onClick={() => navigate(`/${country}`)}
                                  sx={{mb: 1}}
                                  size="small"
@@ -143,7 +106,7 @@ const Country = () => {
                               </BorderButton>) 
                               : <Typography sx={{mb:1}}>No Countries Close</Typography>
                         }</Box>
-                     </PropertyBox>
+                     </Box>
                   </Box>
                </Box>
          }
