@@ -17,4 +17,9 @@ export interface ICountry {
    region: string
    capital: string[]
    subregion: string
+   tld: string
+   currencies: Record<string, any>
+   languages: Record<string, any>
+   borders: string[]
+   cca3: string
 }
