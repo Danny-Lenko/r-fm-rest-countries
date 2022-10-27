@@ -32,7 +32,7 @@ Users are able to:
 ### Links
 
 - [Github repo URL](https://github.com/Danny-Lenko/r-fm-rest-countries)
-- [Live site URL](r-fm-rest-countries.vercel.app)
+- [Live site URL](https://r-fm-rest-countries.vercel.app/)
 
 ## My process
 
